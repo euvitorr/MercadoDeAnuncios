@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+xmlns:xlink="http://www.w3.org/1999/xlink" width="250" height="150">
+
+	<line x1="30" y1="60" x2="200" y2="60" stroke="#af3537" stroke-width="20" stroke-line-cap="square" />
+
+</svg>

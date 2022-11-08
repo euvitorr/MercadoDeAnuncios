@@ -1,0 +1,129 @@
+ 
+0. UpdateOption (for all content, selected, hidden and disabled properties)
+0aaa. move selected to plugin
+0aa. pick.dispose become to complex - simplify
+0a. simplify BuildChoiceAspect and BuildPickAspect (both should accept one choice parameter? BuildPick should not return pick - should use choice)
+0b. UpdateOptionContent ?
+0c. conditional styling ?
+
+1. should got focus on "mouse down" (now on mouse up) as standart input
+1b. click on label when pulldown is opened should close the menu (complex, requres "remember the state on mouse down" because dropdown will be closed on mousedown as control loose focus, and return on mouse up - the standard behaviour for input also ) 
+1c. mouse move not working on whole choice item
+
+2. publish new version of hidden plugin
+1a. better method to manipulate plugins for jquey/bootstrap and esm
+2b. dist modules for tools, MultiSelect, plugins, 
+
+3. custom layouts (slide instead of popup, filter input to choices)
+3a. choices: ul to <div><ul></ul></div>
+3b. optGrouops
+3c. custom Dialog ?
+3d. request css-live.ru community for UX help
+3e. picks as count
+3f. "selected picks first"
+
+4. not-removable picks 
+
+5. check IE 11 (after restart)
+
+6. create/extract "tag input component", extract "autosuggestion component"
+6a. async sarch
+6b. search as API - include integration with https://fusejs.io/ ?
+
+7. create snippet for jquery validate ( https://jqueryvalidation.org/ ) and unobtrusive-validation ( 
+ https://exceptionnotfound.net/asp-net-mvc-demystified-unobtrusive-validation/ )
+
+8. more new css 
+8a use min(), max() и clamp() https://habr.com/ru/company/ruvds/blog/501634/
+8b grid for grid (navigation with arrow left/right)
+8c analyze CSSX (css in js) - is it possible to use for :hover or custom "is empty" rules: https://www.smashingmagazine.com/2016/04/finally-css-javascript-meet-cssx/
+some otther instruments: styled components, css modules https://github.com/w3c/webcomponents/issues/759 ,  Constructable Stylesheets https://developers.google.com/web/updates/2019/02/constructable-stylesheets,  emotion, jss, aphrodite, radium 
+8d css houdini ? to get bootstrap theme variables
+
+== PORTS
+
+1. webpack generated bundle and html https://medium.com/@jonas_duri/build-a-landing-page-with-webpack-4-6efe83deb7fe  (handlebars.js ?)
+-multiple pages: https://www.ivarprudnikov.com/static-website-multiple-html-pages-using-webpack-plus-github-example/ )
+1a some webpack tricks https://habr.com/post/425215/
+1b configure package.json for multiple entrypoints. what is "main:src" there? Check how weback can handle it
+    {
+        "main":"dist/index.js"
+        "module":"lib/index.es6.js"
+        "main:src": "src/index.js" / ?? could it be "polyfill free" (web standard polyfill) ?
+    }
+
+2. Port to web component.
+Several base classes: Polymer (https://github.com/Polymer/polymer), Stencil, LitElement , https://www.polymer-project.org/
+Several "themes": https://github.com/wiredjs/wired-elements , https://github.com/material-components/material-components-web-components
+
+Polymer and LitElement https://43081j.com/2018/08/future-of-polymer 
+
+github списочек полимер компонент https://github.com/PolymerElements , 
+портал списочек компонент https://www.webcomponents.org/ 
+
+
+attaching styles to shadow dom: https://www.smashingmagazine.com/2018/07/reusable-components-custom-elements-shadow-dom-npm/ 
+
+http://jsfiddle.net/gc1rynmf/9/
+https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
+compare how bootstrap manage this with nojquery build
+compare also with other alternatives https://github.com/thednp/bootstrap.native
+
+most important for ws : registration through customElements.define('my-component', MyComponent);
+check what other uses ? https://github.com/webcomponents/webcomponentsjs ?
+
+LIGHT DOM? Use <slot> to project light DOM children into your shadow DOM?
+
+http://jsfiddle.net/bvL8wq0n/3/
+https://www.webcomponents.org/polyfills/
+
+3. port web component to other framework
+Sample: https://www.webcomponents.org/element/@zooplus/zoo-web-components
+
+
+== ENVIRONMENT
+1. Review eslint again 
+https://habr.com/post/417841/
+
+2. github badges as https://github.com/jlmakes/scrollreveal
+
+3. VS Code
+2020 https://habr.com/ru/company/ruvds/blog/501648/
+2. test VisualCode plugins https://habr.com/company/ruvds/blog/425313/
+1) describe current plugins
+2) test those plugins https://medium.com/nuances-of-programming/%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B4%D0%BB%D1%8F-visual-studio-code-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%8B%D0%B5-%D0%BF%D0%BE%D0%B4%D0%BD%D0%B8%D0%BC%D1%83%D1%82-%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B8-%D0%BD%D0%B0-%D0%BD%D0%BE%D0%B2%D1%8B%D0%B9-%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C-a24f29173079
+
+Other plugins 
+Bookmarks + indent-rainbow + Bracket Pair Colorizer 2.
+Code Spell Checker https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker
+
+file icons: https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons
+git history: https://marketplace.visualstudio.com/items?itemName=donjayamanne.githistory
+
+
+Use those VS Code options:
+    Files: Auto Save
+    Smooth Scrolling
+    Inline Values
+
+
+
+
+#### TODO for Changelog
+Follow http://keepachangelog.com/
+There is canonical version that contains link to version diffs.
+Could release description be referenced?
+
+#### Notes:
+https://strizhechenko.github.io/2017/07/10/python-opensource-project-todo-list.html
+https://habrahabr.ru/post/341166/
+
+review rtl: https://habr.com/ru/post/484886/
+
+
+### Auto patch generator
+
+        // Create our shared stylesheet:
+        // const sheet = new CSSStyleSheet();
+        // sheet.replaceSync('#target {color: darkseagreen}');
+        // document.adoptedStyleSheets = [sheet];

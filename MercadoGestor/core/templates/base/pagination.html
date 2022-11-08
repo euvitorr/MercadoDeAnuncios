@@ -1,0 +1,63 @@
+<!-- pagination -->
+
+<div class="row">
+    <div class="" style="margin: auto; padding: 35px; margin-bottom: 50px;">
+      <ul class="pagination" >
+  
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+              <a 
+                style="color:#9999ff; padding: 20px;"
+                class="page-link"
+                href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search }}">&laquo;</a>
+            </li>
+        {% else %}
+          <li class="page-item disabled">
+              <a 
+              href="#" 
+              style="color:#9999ff;padding: 20px;"
+              class="page-link">&laquo;</a>
+            </li>
+        {% endif %}
+  
+        {% for pg in page_obj.paginator.page_range %}
+  
+            {% if page_obj.number == pg %}
+                <li 
+                    class="page-item active">
+                  <a
+                  style="color:#ffff; font-weight: 700; padding: 20px;"
+                  class="page-link" 
+                  href="#">{{ pg }}</a>
+                </li>
+            {% else %}
+                  <a 
+                    style="color:#808080;font-weight: 400;padding: 20px;"  class="page-link"
+                    href="?page={{ pg }}&search={{ request.GET.search }}">
+                    {{ pg }}
+                  </a>
+                </li>
+            {% endif %}
+  
+        {% endfor %}
+  
+        {% if page_obj.has_next %}
+          <li class="page-item">
+              <a 
+                style="color:#9999ff;padding: 20px;"
+                class="page-link"
+                href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search }}">&raquo;</a>
+            </li>
+        {% else %}
+          <li class="page-item disabled">
+              <a
+                style="color:#9999ff;padding: 20px;"
+                class="page-link" 
+                href="#"
+                >&raquo;</a>
+            </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  <!-- https://www.technovelty.org/web/skipping-pages-with-djangocorepaginator.html -->

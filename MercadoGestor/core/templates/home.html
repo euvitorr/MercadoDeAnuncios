@@ -1,0 +1,660 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load embed_video_tags %}
+{% block custom_css %}
+<style>
+  .color-bars {
+    color: white;
+  }
+
+
+
+
+  @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
+
+:root {
+	--yellow: #ffdd40;
+	--dark: #2f313a;
+	--deg: -86deg;
+	--trans: all 0.4s ease 0s;
+}
+
+
+
+
+.content {
+	width: 100%;
+}
+
+.team {
+	padding: 2em 0 2em 2.5em;
+	margin: 0;
+}
+
+.diferentials {
+	margin: 1.5em 0 0.5em;
+	padding: 0.73em;
+	background: linear-gradient(
+		83deg,
+		var(--yellow) 0 97%,
+		#fff0 calc(97% + 1px) 100%
+	);
+	position: relative;
+	list-style: none;
+	display: inline-block;
+	transform: scale(0.85);
+	transition: var(--trans);
+}
+
+.diferentials:nth-of-type(even) {
+	text-align: right;
+	background: linear-gradient(
+		-83deg,
+		var(--yellow) 0 97%,
+		#fff0 calc(97% + 1px) 100%
+	);
+}
+
+.thumb {
+	width: 13vmin;
+	height: 13vmin;
+	float: left;
+	margin-right: 1.25em;
+	background: linear-gradient(
+		var(--deg),
+		var(--dark) 0 70%,
+		var(--yellow) 0% 100%
+	);
+	transform: rotate(-4deg);
+	transition: var(--trans);
+	border-radius: 0.25em;
+	overflow: hidden;
+	margin-left: -3em;
+	padding: 0.5em;
+}
+
+.diferentials:nth-of-type(even) .thumb {
+	--deg: 86deg;
+	float: right;
+	margin-left: 2em;
+	margin-right: -3em;
+	transform: rotate(4deg);
+}
+
+.thumb img {
+	width: 100%;
+	height: 100%;
+	border-radius: 0.25em;
+	filter: grayscale(1);
+	background: var(--dark);
+}
+
+.diferentials:hover {
+	transform: scale(1);
+	transition: var(--trans);
+	filter: drop-shadow(0px 20px 10px #0008);
+}
+
+.diferentials:hover .thumb {
+	padding: 0.1em;
+	transition: var(--trans);
+	transform: rotate(-1deg);
+	--deg: -89deg;
+}
+
+.diferentials:nth-of-type(even):hover .thumb {
+	--deg: 91deg;
+}
+
+.diferentials:hover .thumb img {
+	filter: none;
+	transition: var(--trans);
+}
+
+.description {
+	padding-top: 1vmin;
+}
+
+.description p {
+	padding: 0 2em;
+	margin-bottom: 1em;
+}
+
+
+
+
+
+
+.co-funder:after {
+	content: "CO-FUNDER";
+	font-size: 0.75em;
+	position: absolute;
+	top: -1.5em;
+	background: var(--yellow);
+	right: 4em;
+	transform: rotate(3deg);
+	padding: 0.35em 0.75em 0.5em;
+	border-radius: 0.25em;
+	color: var(--dark);
+	font-weight: bold;
+}
+
+.co-funder:nth-of-type(even):after {
+	right: inherit;
+	left: 4em;
+	transform: rotate(-3deg);
+}
+
+.description p a {
+	display: inline-block;
+	margin: 0.5em 0 0 0;
+	background: var(--dark);
+	color: var(--yellow);
+	padding: 0.1em 0.5em 0.35em;
+	border-radius: 0.5em;
+	text-decoration: none;
+	transition: var(--trans);
+}
+.description p a:hover {
+	transition: var(--trans);
+	color: var(--dark);
+	background: var(--yellow);
+	font-weight: bold;
+}
+
+.description p a img {
+	float: left;
+	width: 22px;
+	filter: invert(1);
+	border-radius: 0.15em;
+	padding: 2px;
+	background: #fff;
+	margin-right: 2px;
+}
+
+
+
+</style>
+
+{% endblock %}
+{% block content %}
+
+
+
+<!--==========================
+  Header
+  ============================-->
+
+{% include 'base/header_white.html' %}
+<!--==========================
+    Hero Section
+  ============================-->
+<div class="element">
+  <div class="hero-container bg-home">
+    <div class="col-lg-12">
+      <section id="main">
+
+        {% if messages %}
+        <div class="row">
+          <ul class="messages" style="width: 95%; position: relative; top: 7em;">
+            {% for message in messages %}
+            <div class="alert alert-light alert-dismissible fade show" role="alert">
+              <span class="text-dark">{{ message }}</span>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <div class="ml-2 mb-4 px-5 col-12 col-md-9 mx-auto title-text text-center" style="margin-top:60px; ">
+          <h1 class="ml-2 text-center font-weight-bold font-size-title">
+            Todo o controle que você precisa<br class="d-none d-md-block"> em um só lugar.
+          </h1>
+        </div>
+        {% comment %} <div class="mt-5 mb-5 col-11 mx-auto">
+          <div class="owl-carousel owl-theme owl-loaded">
+            <div class="owl-stage-outer">
+              <div class="owl-stage" id="owlitems">
+                {% for entity in entities %}
+                <div id="card-entity" class="card owl-item border-0"
+                  style="border-radius:10px; height: 390px; width:341px; padding-right: -5px;">
+                  <div class='text-center border-0 p-0 m-0'>{% if entity.video %}
+                    {% video entity.video '100%x156' %}
+                    {% else %}
+                    <img src="{% static 'img/sobrevideo.jpg' %}" width="100%" height="156px"
+                      class="border-radius-top border-0" alt="">
+                    {% endif %}
+                  </div>
+                  <div
+                    class='text-center position-relative rounded-circle  {{ background|random }} mx-auto row d-flex justify-content-center border-0'
+                    style="width: 80px;height: 80px; margin-bottom: -18px;">
+                    {% if entity.logo %}
+                    <div style="background:url({{ entity.logo.url }}); background-size: contain;"
+                      class="image-logo w-100 h-100" alt=""></div>
+                    {% endif %}
+                  </div>
+                  <div class="card-body">
+                    <div class="text">
+                      <h5 class="center text-dark font-weight-bold text-capitalize negative-margin">
+                        <br class="d-block d-md-none">
+                        {{ entity.razao_social }}
+                      </h5>
+                      {% for category in entity.categories.all %} <div class="text-center text-muted pb-1">{{category}}
+                      </div> {% empty %}<div class="text-center text-muted pb-1"> Não possui categoria cadastrada.
+                      </div> {% endfor %}
+                      <div class="text-dark text-center">{{ entity.bio|truncatechars:80 }}
+                        <span id='readmore{{ entity.pk }}' class="hide">
+                          {{ entity.bio }}
+                        </span>
+                        <a class="read-more-show{{ entity.pk }} text-dark font-weight-bold"
+                          href="{{ entity.get_absolute_url }}">
+                          Leia Mais
+                        </a>
+                      </div>
+                    </div>
+                    <div class="justify-content-center w-100 m-auto text-center d-none d-md-block">
+                      <span class="align-self-center d-flex w-100 m-auto p-auto text-center pt-0 pt-md-4 px-2 px-md-1">
+                        <a class='btnDoar font-weight-bold justify-content-center mx-auto' href="
+                      {% if request.user.is_authenticated %} 
+                        {% url 'shop:shop' %}?entity={{ entity.pk }}
+                      {% else %} 
+                        {% url 'shop:shop_login' %}
+                      {% endif %}
+                    ">
+                          <span class="align-self-center d-flex"><img src="{% static 'img/assets/icon_heart.svg' %}"
+                              style="width: 20px; height: 20px;" class="mr-1 icon-doar"><span class="d-inline">Quero
+                              Doar</span></span>
+                        </a>&nbsp;&nbsp;
+                        <a class='btnSaibaMais btn btn-outline-info font-weight-bold mx-auto'
+                          href="{{ entity.get_absolute_url }}">
+                          Saiba Mais
+                        </a>
+                      </span>
+                    </div>
+                    <div class="justify-content-center w-100 m-auto text-center d-block d-md-none">
+                      <span class="align-self-center d-flex w-100 mx-auto mb-2 p-auto text-center px-3">
+                        <a class='btnDoar btn font-weight-bold justify-content-center mx-auto' href="
+                      {% if request.user.is_authenticated %} 
+                        {% url 'shop:shop' %} 
+                      {% else %} 
+                        {% url 'shop:shop_login' %}
+                      {% endif %}
+                    ">
+                          <span class="align-self-center d-flex"><img src="{% static 'img/assets/icon_heart.svg' %}"
+                              style="width: 20px; height: 20px;" class="mr-1 icon-doar"><span class="d-inline">Quero
+                              Doar</span></span>
+                        </a></span><span class="align-self-center d-flex w-100 m-auto p-auto text-center px-3">
+                        <a class='btnSaibaMais btn btn-outline-info font-weight-bold mx-auto'
+                          href="{{ entity.get_absolute_url }}">
+                          Saiba Mais
+                        </a>
+
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+          </div>
+        </div> {% endcomment %}
+
+      </section><!-- #hero -->
+
+      <!--==========================
+      Team Section
+    ============================-->
+      <section id="team" class="bg-white border-radius">
+        <div class="container wow fadeInUp" style="border-radius:10px;background:#fff;">
+          <div>
+            <div class="section-header">
+              <h3 class="section-title">Mercado Alinhado</h3>
+              <p class="section-description text-dark">
+                Entre em contato e obtenha autônomia.
+              </p>
+            </div>
+            <hr>
+            <div class="row">
+
+              <div class="col-xl-4 col-md-12">
+                <div class="member">
+                  <div class="pic">
+                    <img src="{% static 'img/assets/3.svg' %}" alt="">
+                  </div>
+                  <span>Atualizaremos seu estoque no mercado livre.</span>
+                </div>
+              </div>
+
+              <div class="col-xl-4 col-md-12">
+                <div class="member">
+                  <div class="pic">
+                    <img src="{% static 'img/assets/2.svg' %}" alt="">
+                  </div>
+                  <span>A sua venda no mercado livre é atualizada automáticamente em nossa plataforma.</span>
+                </div>
+              </div>
+
+              <div class="col-xl-4 col-md-12">
+                <div class="member">
+                  <div class="pic"><img src="{% static 'img/assets/4.svg' %}" alt=""></div>
+                  <span>
+                    Com nosso site, você acessa via celular, tablet, computador ou notebook. Dá até mesmo para colocar
+                    na televisão!
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section><!-- #team -->
+
+
+      <!--==========================
+      Diferenciais Section
+      ============================-->
+      <!-- 
+      <section id="diferenciais">
+        <div class="container wow fadeInUp">
+
+          <div class="section-header">
+            <h2 class="section-title title-diferenciais">Nossos Diferenciais</h2>
+            <p></p>
+          </div>
+          <div class="row">
+            
+            <div class="content">
+
+              <ul class="team">
+            
+                <li class="diferentials">
+                  <div class="thumb"><img src="https://assets.codepen.io/39255/internal/avatars/users/default.png?height=120&width=120"></div>
+                  <div class="description">
+                    <h3>Stephen Shaw</h3>
+                    <p>Stephen is a designer/developer residing in Houston. He likes to build animations with CSS & JavaScript.<br><a href="https://codepen.io/shshaw/">@shshaw</a></p>
+                  </div>
+                </li>
+                <li class="diferentials">
+                  <div class="thumb"><img src="https://cpwebassets.codepen.io/assets/packs/about-rachelsmith-6878ca76a1d9200e6c296e810050b8cb.jpg?height=120&width=120"></div>
+                  <div class="description">
+                    <h3>Rachel Smith</h3>
+                    <p>Rachel is a full stack'er in Australia. Not only a creative and talented designer and developer, but a great technical writer.<br><a href="https://codepen.io/rachsmith/">@rachsmith</a></p>
+                  </div>
+                </li>
+                <li class="diferentials">
+                  <div class="thumb"><img src="https://cpwebassets.codepen.io/assets/packs/about-robertkieffer-77c28f3a6efe082fd1903affae540b8a.jpg?height=120"></div>
+                  <div class="description">
+                    <h3>Robert Kieffer</h3>
+                    <p>Robert is a full-stack dev with a penchant for open-source work. He dwells in the murky depthsmurky depths of JS.<br><a href="https://codepen.io/broofa/">@broofa</a></p>
+                  </div>
+                </li>
+              </ul>
+            
+            </div>
+            <div class="col-xl-4 col-12 mb-2 mt-5 mt-md-0">
+              <div class="card text-center card-expand">
+                <div class="card-body " style="height: 17rem;">
+                  <div class="member">
+                    <div class="pic mx-auto">
+                      <img class="card-img-top" src="{%  static 'img/assets/icon_heart_2.svg' %}" alt="Card image"
+                        style="width:98%">
+                    </div>
+                  </div>
+                  <h5 class="card-title ponto-card-title">Comprometimento</h5>
+                  <p class="card-p-diferenciais">
+                    Somos seu facilitador e intermediador, altere vários anúncios uma única vez.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-xl-4 col-12 mb-2 mt-5 mt-md-0">
+              <div class="card text-center card-expand">
+                <div class="card-body " style="height: 17rem;">
+                  <div class="member">
+                    <div class="pic mx-auto">
+                      <img class="card-img-top" src="{% static 'img/assets/icon_pontos.svg' %}" alt="Card image"
+                        style="width:98%">
+                    </div>
+                  </div>
+                  <h5 class="card-title ponto-card-title">Cooperação</h5>
+                  <p class="card-p-diferenciais">
+                    Focados em ser sua ferramenta essencial.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-12 mb-5 mt-5 mt-md-0">
+              <div class="card text-center card-expand">
+                <div class="card-body" style="height: 17rem;">
+                  <div class="member">
+                    <div class="pic mx-auto">
+                      <img class="card-img-top" src="{% static 'img/assets/icon_gamification.svg' %}" alt="Card image"
+                        style="width:98%">
+                    </div>
+                  </div>
+                  <h5 class="card-title ponto-card-title">Gerencie+</h5>
+                  <span class="card-p-diferenciais">
+                    Aqui você pode gerir seus produtos, estoques e vendas como nunca!
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div> 
+      </section>--><!-- #team -->
+
+      <!--==========================
+      About Us Section
+    ============================-->
+      <section id="about" class="mb-3 mb-md-0">
+        <div class="container pt-0 mx-auto">
+          
+          <hr>
+              <h2 class="title center">Conheça a ManagerML</h2>
+              <p class="center">
+                A ManagerML nasceu da iniciativa de um time apaixonado em
+                transformar o mundo e que tem como missão ajudar vendedores, lojistas e comerciantes em geral.
+                É uma plataforma de gestão de produtos, anúncios e vendas para o Mercado Livre.
+              </p>
+
+           
+        
+        </div>
+      </section><!-- #about -->
+
+
+      <!--==========================
+      Dúvidas Section
+    ============================-->
+      <section id="duvidas" class="pb-5">
+        <svg viewBox="0 0 500 150" preserveAspectRatio="none" class="background-wavy">
+          <path d="M-2.54,98.19 C90.57,-24.17 439.33,-20.22 503.67,104.11 L500.00,150.00 L0.00,150.00 Z"></path>
+        </svg>
+        <div class="section-header text-center">
+          <div class="duvidas-frequentes">
+            <h2 class="section-title">
+              Posso te ajudar?
+            </h2>
+            <div id="accordion">
+              <div class="row about-container">
+                {% for question in questions %}
+                <div class="col-12 col-md-6" style="margin-bottom: 20px;">
+                  <div class="about-container-boxduv">
+                    <div class="about-container-boxduv-item">
+                      <a class="" data-toggle="collapse" data-target="#collapse-{{ question.pk }}" aria-expanded="true"
+                        aria-controls="collapse-{{ question.pk }}">
+                        <div class="_boxduv">
+                          <img src="{% static 'img/assets/icon_plus.svg' %}" align="left" />
+                        </div>
+                      </a>
+                    </div>
+                    <div class="about-container-boxduv-item">
+                      <p>{{ question }}</p>
+                      <div id="collapse-{{ question.pk }}" class="collapse" aria-labelledby="headingOne"
+                        data-parent="#accordion">
+                        <div class="card-body">
+                          <p>
+                            <strong>
+                              Resposta:
+                            </strong>
+                            {{ question.answer }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+
+                <div class="col-12 pt-3">
+                  <span style="margin:auto">
+                    <span style="color: white;">Para visualizar mais dúvidas, </span>
+                    <strong><a style="color: yellow;" href="{% url 'core:question_list' %}"> clique aqui</a></strong>
+                  </span>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section><!-- #about -->
+
+      <!--==========================
+      Contact Section
+    ============================-->
+      <!-- <section id="contact" class="col-12">
+
+        <div class="wow fadeInUp ">
+          <div class="row justify-content-center">
+
+            <div class="col-md-6 newsletter">
+
+              <div class="">
+                <h4>
+                  Assine nossa newsletter e receba notícias sobre causas, eventos e conteúdos do nosso blog.
+                </h4>
+                <form action="{% url 'subscribe:subscribe' %}" id="subscribe_form" method="post" role="form"
+                  class="form-inline">
+                  {% csrf_token %}
+
+                  <div class="input-group row col-md-9">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text newlatteremail"
+                        style="padding: 10px 10px 10px 10px;margin: 0px; color: #1c94c4">
+                        <i class="fa fa-envelope"></i>
+                      </span>
+                    </div>
+                    <input type="text" placeholder="Email" name="email" id="email-subscribe"
+                      class="form-control border-left-0 newlatteremail">
+                  </div>
+                  <button class="btn btn-light col-3">
+                    Assinar
+                  </button>
+                  <div class="validation"></div>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 deixecontato">
+              <div class="form ">
+                <h4>Quer saber mais? deixe o seu contato.</h4>
+              </div>
+
+              <form id="contact_form" action="{% url 'subscribe:contact' %}" method="post" role="form"
+                class="contactForm_">
+                {% csrf_token %}
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <input type="text" name="nome" class="form-control" placeholder="Seu Nome" data-rule="minlen:4"
+                      data-msg="Please enter at least 4 chars" />
+                    <div class="validation"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-6" style="float: left; margin-right: 0px;">
+                  <div class="form-group">
+                    <input type="text" name="phone" class="form-control" placeholder="11 9 1234 5678"
+                      data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                    <div class="validation"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-6" style="float: right;">
+                  <div class="form-group">
+                    <input type="text" name="email" class="form-control" placeholder="E-mail" data-rule="minlen:4"
+                      data-msg="Please enter at least 4 chars" />
+                    <div class="validation"></div>
+                  </div>
+                </div>
+
+                <label for="scales" style="padding: 15px">
+                  <input type="checkbox" id="scales" name="whatapp_enable" checked />
+                  <span class="text-muted" style="font-size: 12px;">
+                    Aceito receber mensagem via whatsapp.
+                  </span>
+                </label>
+
+                <button class="btn-send-contato">
+                  Enviar Mensagem
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>#contact -->
+    </div>
+
+
+    <div class="modal" tabindex="-1" role="dialog" id="modal-result">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="result-text">
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary bg-ps" data-dismiss="modal"> Fechar </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    {% include 'base/footer.html' %}
+  </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="{% static 'js/show_more.min.js' %}"></script>
+
+{% for entity in entities %}
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    if ($('#readmore{{ entity.pk }}').text().length <= 80) {
+      $('.read-more-show{{ entity.pk }}').addClass('hide')
+    }
+  });
+
+</script>
+{% endfor %}
+{% endblock %}

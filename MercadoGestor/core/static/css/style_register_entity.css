@@ -1,0 +1,72 @@
+.render-image > a{
+    color: black;
+}
+
+.transparency{
+    background-color: rgba(255, 255, 255, 0.95);
+}
+.dropdown-menu{
+    width: 100%;
+    margin-left: -18px;
+    margin-top:10px;
+}
+#image-profile{
+	display: none;
+}
+#change-image-button {
+    top:45%;
+    left:45%;
+    display: none;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    color:#3071A1;
+    font-size: 1em;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.profile-photo:hover #change-image-button {
+    display: block;
+}
+
+.profile-photo:hover #profile-src {
+  opacity: 0.5; 
+}
+
+.profile-photo {
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 100%;
+    position: relative;
+    width:160px;
+    height:160px;
+    border-color: #e2e2e2;
+    background-color:#fff;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10000;
+}
+
+#profile-src {
+    color: rgb(85, 85, 85);
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    border: 0px none rgb(85, 85, 85);
+    border-radius: 100%;
+}
+
+.input-perfil{
+  width: 210px;
+}
+
+.contratosociallink > a {
+    color:black;
+
+}
+.inline{
+    display: inline-block;
+}
+

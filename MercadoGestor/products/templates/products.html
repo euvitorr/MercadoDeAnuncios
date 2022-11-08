@@ -1,0 +1,342 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load embed_video_tags %}
+{% block custom_css %}
+<style>
+  input[type="number"] {
+  -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+          appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+  .color-bars {
+    color: white;
+  }
+</style>
+
+{% endblock %}
+{% block content %}
+
+
+
+<!--==========================
+  Header
+  ============================-->
+
+{% include 'base/header_white.html' %}
+<!--==========================
+    Hero Section
+  ============================-->
+<div class="element">
+  <div class="hero-container bg-home">
+    <div class="col-lg-12">
+<br><br><br>      <!--==========================
+      Team Section
+    ============================-->
+      <section id="team" class="border-radius bg-white wow fadeInUp">
+        <div class="container" style="border-radius:10px;">
+          <!-- <div>
+            <div class="section-header">
+              <h3 class="section-title">Cadastre seus anuncios</h3>
+            </div>
+            <hr>
+         
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <hr>
+                    {{ form_inline.as_p }}
+                    <button type="submit" class="btn btn-success">Post</button>
+                </form>
+          </div> -->
+          <div class=""><br>
+            <h2 class="text-center">Publicações Ativas</h2><hr>
+              <table id="example" class="table" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <td class="text-center"></td>
+                    <th class="text-center col-sm-2">Produto</th>
+                    <th class="text-center">Quantidade</th>
+                    <td class="text-center" style="text-align:center;width:100px;"></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for product in products %}
+                  <tr>
+                    <td class="text-center"><img src="{{ product.image.url }}"  style="max-height:50px;min-height: 50px;max-width: 50px;min-width: 50px;"></td>
+                    <td class="text-center">{{ product.name }}</td>
+                    <td class="text-center"><div class="input-group mb-3">
+                      <button class="btn btn-outline-secondary" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown();Ajax('{{ product.id }}')"  id="button-addon1">-</button>
+                      <input type="number" class="form-control text-center w-25" pattern="[0-9]*" inputmode="numeric" value="{{ product.quantity }}" id='{{ product.id }}_available_quantity' onchange="Ajax('{{ product.id }}')">
+                      <button class="btn btn-outline-secondary"  onclick="this.parentNode.querySelector('input[type=number]').stepUp();Ajax('{{ product.id }}')" type="button" id="button-addon2">+</button>
+                    </div></td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-primary btn-xs dt-edit" style="margin-right:16px;" onclick="window.location.replace('http://localhost:8000/admin/products/product/{{ product.id }}/change/');">
+                        <i class="bi bi-pencil-square"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              
+              <!-- Modal -->
+              <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+              
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Row information</h4>
+                    </div>
+                    <div class="modal-body">
+                      
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+              
+                </div>
+              </div>
+          
+          
+          <hr>
+        </div><br>
+      </section><!-- #team -->
+
+
+
+      <!--==========================
+      Contact Section
+    ============================-->
+      {% comment %} <section id="contact" class="col-12">
+
+        <div class="wow fadeInUp ">
+          <div class="row justify-content-center">
+
+            <div class="col-md-6 newsletter">
+
+              <div class="">
+                <h4>
+                  Assine nossa newsletter e receba notícias sobre causas, eventos e conteúdos do nosso blog.
+                </h4>
+                <form action="{% url 'subscribe:subscribe' %}" id="subscribe_form" method="post" role="form"
+                  class="form-inline">
+                  {% csrf_token %}
+
+                  <div class="input-group row col-md-9">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text newlatteremail"
+                        style="padding: 10px 10px 10px 10px;margin: 0px; color: #1c94c4">
+                        <i class="fa fa-envelope"></i>
+                      </span>
+                    </div>
+                    <input type="text" placeholder="Email" name="email" id="email-subscribe"
+                      class="form-control border-left-0 newlatteremail">
+                  </div>
+                  <button class="btn btn-light col-3">
+                    Assinar
+                  </button>
+                  <div class="validation"></div>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 deixecontato">
+              <div class="form ">
+                <h4>Quer saber mais? deixe o seu contato.</h4>
+              </div>
+
+              <form id="contact_form" action="{% url 'subscribe:contact' %}" method="post" role="form"
+                class="contactForm_">
+                {% csrf_token %}
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <input type="text" name="nome" class="form-control" placeholder="Seu Nome" data-rule="minlen:4"
+                      data-msg="Please enter at least 4 chars" />
+                    <div class="validation"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-6" style="float: left; margin-right: 0px;">
+                  <div class="form-group">
+                    <input type="text" name="phone" class="form-control" placeholder="11 9 1234 5678"
+                      data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                    <div class="validation"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-6" style="float: right;">
+                  <div class="form-group">
+                    <input type="text" name="email" class="form-control" placeholder="E-mail" data-rule="minlen:4"
+                      data-msg="Please enter at least 4 chars" />
+                    <div class="validation"></div>
+                  </div>
+                </div>
+
+                <label for="scales" style="padding: 15px">
+                  <input type="checkbox" id="scales" name="whatapp_enable" checked />
+                  <span class="text-muted" style="font-size: 12px;">
+                    Aceito receber mensagem via whatsapp.
+                  </span>
+                </label>
+
+                <button class="btn-send-contato">
+                  Enviar Mensagem
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section><!-- #contact --> {% endcomment %}
+    </div>
+
+
+    <div class="modal" tabindex="-1" role="dialog" id="modal-result">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="result-text">
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary bg-ps" data-dismiss="modal"> Fechar </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <BR><BR><BR><BR><BR><BR>
+
+    {% include 'base/footer.html' %}
+  </div>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="{% static 'js/show_more.min.js' %}"></script>
+<script>$(document).ready(function() {
+	//Only needed for the filename of export files.
+	//Normally set in the title tag of your page.
+	document.title='Simple DataTable';
+	// DataTable initialisation
+	$('#example').DataTable(
+		{
+			"dom": '<"dt-buttons"Bf><"clear">lirtp',
+			"paging": false,
+			"autoWidth": true,
+			"columnDefs": [
+				{ "orderable": false }
+			],"columns": [
+    { "width": "5%" },
+    { "width": "60%" },
+    { "width": "5%" },
+    { "width": "20%" },
+
+  ],
+			"buttons": [
+				'colvis',
+				'copyHtml5',
+        'csvHtml5',
+				'excelHtml5',
+        'pdfHtml5',
+				'print'
+			]
+		}
+	);
+	//Add row button
+	$('.dt-add').each(function () {
+		$(this).on('click', function(evt){
+			//Create some data and insert it
+			var rowData = [];
+			var table = $('#example').DataTable();
+			//Store next row number in array
+			var info = table.page.info();
+			rowData.push(info.recordsTotal+1);
+			//Some description
+			rowData.push('New Order');
+			//Random date
+			var date1 = new Date(2016,01,01);
+			var date2 = new Date(2018,12,31);
+			var rndDate = new Date(+date1 + Math.random() * (date2 - date1));//.toLocaleDateString();
+			rowData.push(rndDate.getFullYear()+'/'+(rndDate.getMonth()+1)+'/'+rndDate.getDate());
+			//Status column
+			rowData.push('NEW');
+			//Amount column
+			rowData.push(Math.floor(Math.random() * 2000) + 1);
+			//Inserting the buttons ???
+			rowData.push('<button type="button" class="btn btn-primary btn-xs dt-edit" style="margin-right:16px;"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button><button type="button" class="btn btn-danger btn-xs dt-delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>');
+			//Looping over columns is possible
+			//var colCount = table.columns()[0].length;
+			//for(var i=0; i < colCount; i++){			}
+			
+			//INSERT THE ROW
+			table.row.add(rowData).draw( false );
+			//REMOVE EDIT AND DELETE EVENTS FROM ALL BUTTONS
+			$('.dt-edit').off('click');
+			$('.dt-delete').off('click');
+			//CREATE NEW CLICK EVENTS
+			$('.dt-edit').each(function () {
+				$(this).on('click', function(evt){
+					$this = $(this);
+					var dtRow = $this.parents('tr');
+					$('div.modal-body').innerHTML='';
+					$('div.modal-body').append('Row index: '+dtRow[0].rowIndex+'<br/>');
+					$('div.modal-body').append('Number of columns: '+dtRow[0].cells.length+'<br/>');
+					for(var i=0; i < dtRow[0].cells.length; i++){
+						$('div.modal-body').append('Cell (column, row) '+dtRow[0].cells[i]._DT_CellIndex.column+', '+dtRow[0].cells[i]._DT_CellIndex.row+' => innerHTML : '+dtRow[0].cells[i].innerHTML+'<br/>');
+					}
+					$('#myModal').modal('show');
+				});
+			});
+			$('.dt-delete').each(function () {
+				$(this).on('click', function(evt){
+					$this = $(this);
+					var dtRow = $this.parents('tr');
+					if(confirm("Are you sure to delete this row?")){
+						var table = $('#example').DataTable();
+						table.row(dtRow[0].rowIndex-1).remove().draw( false );
+					}
+				});
+			});
+		});
+	});
+	//Delete buttons
+	$('#myModal').on('hidden.bs.modal', function (evt) {
+		$('.modal .modal-body').empty();
+	});
+});</script>
+
+
+<script type="text/javascript">
+
+function Ajax(item){
+  let data = {"title":document.getElementById(item+'_available_quantity').value}
+  const csrf = "{{ csrf_token }}";
+  console.log('http://localhost:8000/products/product/'+item+'/'+document.getElementById(item+'_available_quantity').value)
+ $.ajax({
+    type: 'POST',
+    url: 'http://localhost:8000/products/product/'+item+'/'+document.getElementById(item+'_available_quantity').value,
+    contentType: 'application/json',
+    data: {'csrfmiddlewaretoken':csrf}
+}).done(function () {
+    console.log('SUCCESS');
+}).fail(function (msg) {
+    console.log('FAIL');
+}).always(function (msg) {
+    console.log('ALWAYS');
+}); 
+}
+</script>
+
+{% endblock %}

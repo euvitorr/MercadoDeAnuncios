@@ -1,0 +1,7 @@
+{% autoescape off %}
+Ola, {% if user.get_full_name %} {{ user.get_full_name }} {% else %}{{ user.email }}{% endif %},
+
+Por favor, acesso o link para confirmar seu registro:
+
+http://{{ domain }}{% url 'users:activate' uidb64=uid token=token %}
+{% endautoescape %}

@@ -1,0 +1,331 @@
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+a{
+  text-decoration: none;
+  color: #2D3277;
+}
+#header {
+  padding: 40px;
+  height: 120px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  transition: all 0.5s;
+  z-index: 997;
+}
+
+#header #logo {
+  float: left;
+}
+
+#header #logo h1 {
+  font-size: 36px;
+  margin: 0;
+  padding: 2px 0;
+  line-height: 1;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+#header #logo h1 a,
+#header #logo h1 a:hover {
+text-decoration: none;  
+}
+
+#header #logo img {
+  padding: 0;
+  margin: -28px -4em;
+  /*left: 200px;*/
+  width: 70px;
+  padding-bottom: 3px;
+}
+#header {
+  padding: 28px  -4em;
+  height: 120px;
+}
+#header a.pages{
+  color: #2D3277;
+  text-decoration: none;  
+}
+#header.header-fixed {
+  color: #2D3277;
+  background: #fff;
+  padding: 28px  -4em;
+  height: 120px;
+  transition: all 0.5s;
+}
+
+#header.header-fixed a.pages{
+  color: #2D3277;
+}
+
+#header.header-fixed-white {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 28px  -4em;
+  height: 100px;
+  transition: all 0.5s;
+}
+
+.dropdown{
+  padding: 10px;
+}
+
+.dropdown > a{ 
+  text-align: center;
+	border-style: solid;
+  border-color: white;
+  font-weight: bold;
+	border-width: 1px;
+  width: 130px;
+  text-decoration: none;  
+  align-items: center; 
+}
+
+.border-yellow{
+  border-style: solid;
+  border-color: #fff113;
+  border-width: 1px;
+  border-radius:3px;
+}
+@media only screen and (min-width : 1203px) {
+  .menu-center {
+    margin-left: 30rem !important;
+  }
+}
+@media only screen and (min-width : 1007px) and (max-width: 1202px) {
+  .menu-center {
+    margin-left: 17rem !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+
+/* Nav Menu Essentials */
+
+.nav-menu,
+.nav-menu * {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-menu ul {
+  position: absolute;
+  display: none;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+  width:200px;
+  background-color: white;
+}
+
+.nav-menu li {
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav-menu > li {
+  float: left;
+}
+
+.nav-menu li:hover > ul,
+.nav-menu li.sfHover > ul {
+  display: block;
+}
+
+.nav-menu ul ul {
+  top: 0;
+  left: 100%;
+}
+
+
+/* Nav Menu Arrows */
+
+.sf-arrows .sf-with-ul {
+  padding-right: 30px;
+}
+
+.sf-arrows .sf-with-ul:after {
+  content: "\f107";
+  position: absolute;
+  right: 15px;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.sf-arrows ul .sf-with-ul:after {
+  content: "\f105";
+}
+
+/* Nav Meu Container */
+
+#nav-menu-container {
+  /*float: right;*/
+  margin: 0;
+  margin-left: -170px;
+}
+
+/* Nav Meu Styling */
+
+.nav-menu .decoration{
+  padding: 10px 8px 10px 8px;
+  display: inline-block;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 15px;
+  outline: none;
+  vertical-align: middle;
+}
+
+.nav-menu > li {
+  margin-left: 10px;
+}
+
+.nav-menu > li > a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  text-decoration: none;  
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.nav-menu a:hover:before,
+.nav-menu li:hover > a:before,
+.nav-menu .menu-active > a:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+.nav-menu ul {
+  margin: 20px 0 0 0;
+}
+
+
+.nav-menu ul li:first-child {
+  border-top: 0;
+}
+
+
+
+@media (min-width: 1006px) {
+  #mobile-nav-toggle {
+  display: none;
+  }
+}
+/* Mobile Nav Toggle */
+
+#mobile-nav-toggle {
+  position: fixed;
+  z-index: 999;
+  margin: 30px 0 0 80vw;
+  border: 0;
+  background: none;
+  font-size: 24px;
+  transition: all 0.4s;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Mobile Nav Styling */
+
+#mobile-nav {
+  position: fixed;
+  top: 0;
+  padding-top: 18px;
+  bottom: 0;
+  z-index: 998;
+  background: rgba(255, 209, 0, 0.9);
+  left: -260px;
+  width: 260px;
+  overflow-y: auto;
+  transition: 0.4s;
+}
+
+#mobile-nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#mobile-nav ul li {
+  position: relative;
+}
+
+#mobile-nav ul li a {
+  color: #2D3277;
+  font-size: 16px;
+  overflow: hidden;
+  padding: 10px 22px 10px 15px;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  outline: none;
+}
+
+#mobile-nav ul li a:hover {
+  color: #2D3277;
+}
+
+#mobile-nav ul li li {
+  padding-left: 30px;
+}
+
+#mobile-nav ul .menu-has-children i {
+  position: absolute;
+  right: 0;
+  z-index: 99;
+  padding: 15px;
+  cursor: pointer;
+  color: #2D3277;
+}
+
+#mobile-nav ul .menu-has-children i.fa-chevron-up {
+  color: #2D3277;
+}
+
+#mobile-nav ul .menu-item-active {
+  color: #2D3277;
+}
+
+#mobile-body-overly {
+  width: 100%;
+  height: 100%;
+  z-index: 997;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+}
+
+/* Mobile Nav body classes */
+
+body.mobile-nav-active {
+  overflow: hidden;
+}
+
+body.mobile-nav-active #mobile-nav {
+  left: 0;
+}
+
+body.mobile-nav-active #mobile-nav-toggle {
+  color: #FFD100;
+}
+

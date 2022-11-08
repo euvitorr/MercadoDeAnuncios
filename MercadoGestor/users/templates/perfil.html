@@ -1,0 +1,385 @@
+{% load widget_tweaks %}
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>ManagerML</title>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <!-- Bootstrap CSS File -->
+      <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Main Stylesheet File -->
+      <link href="{% static 'css/crop.css' %}" rel="stylesheet">
+      <link href="{% static 'css/style_perfil.css' %}" rel="stylesheet">
+   </head>
+   <body>
+      <header id="header">
+         <div id="logo" class="pull-left">
+            <a href="{% url 'home' %}"><img src="{% static 'img/assets/logo.svg' %}" alt="" title="" /></img></a>
+         </div>
+      </header>
+      <!-- #header -->
+      <br>
+      <div class="row message">
+        {% include 'base/messages.html' %}
+      </div>
+      <div class="container_header text-center">
+         <div class="title">
+            <h1>Perfil</h1>
+         </div>
+      </div>
+      <div class="container" id="container">
+         <div class="form-container sign-up-container">
+            <form class='dados' enctype="multipart/form-data" action="{% url 'users:profile' %}" method="POST">
+               {% csrf_token %}                     
+               <br>
+               <br class="d-none d-md-block">
+               <input type="text" value="{{ object.id }}" name='id' hidden="hidden">
+               <div class="form-row">
+                  <div class="form-group col-6">
+                     <label for="inputNome">Nome</label>
+                     {% render_field user_form.first_name|add_class:'form-control'  placeholder="Nome"  id="inputFirstName" %}
+                  </div>
+                  <div class="form-group col-6">
+                     <label for="inputAddress">Sobrenome</label>
+                     {% render_field user_form.last_name|add_class:'form-control'  placeholder="Sobrenome" id="inputLastName" %}
+                  </div>
+               </div>
+               <div class="form-row">
+                  <div class="form-group col-6 ">
+                     <label for="inputPhone" class="d-none d-md-block">Celular</label>
+                     {% render_field user_form.phone|add_class:'form-control'  placeholder="telefone"  id="inputPhone" %}
+                     {% if user_form.phone.errors %}
+                        {% for error in user_form.phone.errors %}
+                        <span class="has-error">{{ error }}</span>
+                        {% endfor %}
+                     {% endif %}
+                  </div>
+                  <div class="form-group col-6 ">
+                     <label for="inputCPF" class="d-none d-md-block">CPF</label>
+                     {% render_field user_form.cpf|add_class:'form-control'  placeholder="CPF"  id="inputCPF" %}
+                     {% if user_form.cpf.errors %}
+                        {% for error in user_form.cpf.errors %}
+                        <span class="has-error">{{ error }}</span>
+                        {% endfor %}
+                     {% endif %}
+                  </div>
+               </div>
+               <div class="form-row">
+                  <div class="form-group col-10">
+                     <label for="inputAddress">Endereço</label>
+                     {% render_field address_form.street|add_class:'form-control' placeholder="Rua" id="inputAddress" %}            
+                  </div>
+                  <div class="form-group col-2">
+                     <label for="inputNumber">Nº</label>
+                     {% render_field address_form.street_number|add_class:'form-control' placeholder="Número" id="inputNumber" %}
+                  </div>
+                  <div class="form-group col-4">
+                     <label for="inputComplemento">Compl.</label>
+                     {% render_field address_form.complement|add_class:'form-control' placeholder="Complemento"  id="inputComplemento" %}
+                  </div>
+                  <div class="form-group col-4">
+                     <label for="inputNeighborhood">Bairro</label>
+                     {% render_field address_form.neighborhood|add_class:'form-control'  placeholder="Bairro" id="inputNeighborhood" %}
+                  </div>
+                  <div class="form-group col-4">
+                     <label for="inputCEP">CEP</label>
+                     {% render_field address_form.zipcode|add_class:'form-control'  placeholder="CEP"  id="inputCEP" %}
+                  </div>
+               </div>
+               <div class="form-row">
+                  <div class="form-group col-6">
+                     <label for="inputCity">Cidade</label>
+                     {% render_field address_form.city|add_class:'form-control'  placeholder="Cidade"  id="inputCity" %}
+                  </div>
+                  <div class="form-group col-6">
+                     <label for="id_state">UF </label>
+                     {% render_field address_form.state|add_class:'form-control' id="inputState" %}
+                     {% if address_form.state.errors %}
+                        {% for error in address_form.state.errors %}
+                        <span class="has-error">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                  </div>
+               </div>
+
+               <button type="submit" name="update_user_data" class="btn-perfil-ps">Terminei</button>
+            </form>
+         </div>
+         <div class="form-container sign-in-container">
+            <div class="profile-card">
+               <div class="image-container  text-center">
+               </div>
+               <br>
+               <div class="main-container-profile">
+                  <h1 class="text-center blue-text title-size">Dados</h1>
+                  <br>
+                  <table class="table table-striped">
+                     <tr>
+                        <td>
+                           Nome:
+                        </td>
+                        <td>
+                           {{ object.first_name|default_if_none:"" }} {{ object.last_name }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           Contato:
+                        </td>
+                        <td>
+                           {{ object.phone|default_if_none:"" }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           Nascimento:
+                        </td>
+                        <td>
+                           {{ object.birth|default_if_none:"" }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           CPF/CNPJ
+                        </td>
+                        <td>
+                           {{ object.cpf|default_if_none:"" }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           Rua
+                        </td>
+                        <td>
+                           {{ object.address.street|default_if_none:"" }}, {{ object.address.street_number|default_if_none:"" }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           Bairro, Cidade e UF
+                        </td>
+                        <td>
+                           {{ object.address.neighborhood|default_if_none:"" }}, {{ object.address.city|default_if_none:"" }} - {{ object.address.state|default_if_none:"" }}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           CEP, Complemento e Território
+                        </td>
+                        <td>
+                           {{ object.address.zipcode|default_if_none:"" }}, {{ object.address.complement|default_if_none:"" }} - {{ object.address.country|default_if_none:"" }}
+                        </td>
+                     </tr>
+                  </table>
+                  <div class="text-center"> <a class='shop_all' href="{% url 'users:history' %}">Acessar Histórico</a></div>
+               </div>
+            </div>
+         </div>
+         <div class="overlay-container">
+            <div class="overlay">
+               <div class="overlay-panel overlay-left">
+                  <br><br><br><br><br><br><br>
+                  <h1>Voltar para o meu perfil!</h1>
+                  <p>Mantenha seus dados sempre atualizados!</p>
+                  <button class="btn-perfil-ps btn-perfil-ps-ghost" id="signIn">Voltar</button>
+               </div>
+               <div class="overlay-panel overlay-right">
+                  <div id="profile-wrap">
+
+
+                     <div class="profile-overlay"></div>
+                     <form class="avatar-img" enctype="multipart/form-data" action="{% url 'users:update_avatar' request.user.pk %}" method="POST">
+                        {% csrf_token %}
+                        <div id="profile-photo">
+                          <img  src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% endif %}"  id="profile-src">
+                          {% render_field avatar_form.avatar|add_class:'form-control' %}
+                          {{ avatar_form.x }}
+                          {{ avatar_form.y  }}
+                          {{ avatar_form.width  }}
+                          {{ avatar_form.height  }}
+                          <a id="change-image-button">
+                            <i class="fa fa-camera-retro"></i>
+                          </a>
+                        </div>
+                     </form>
+                     <hr>
+                     <div class="title">
+                        <h1>{{ object.first_name }}</h1>
+                     </div>
+                  </div>
+                  <hr>
+                  <p class="d-none d-md-block"><br>  Lembre-se de mantê-los atualizados,<br> pois usamos eles em nossas transações!</p>
+                  <a href="{% url 'users:password_reset' %}" class="radius-btn-red btn text-white" id="">Trocar Senha</a>
+                  <button class="radius-btn-red btn" id="signUp">Alterar dados</button>
+                  <hr>
+                  <br><br class="d-sm-block d-md-none"><br class="d-sm-block d-md-none">
+                  <a class="radius-btn text-light " href="{% url 'home' %}">Voltar ao Início</a>
+               </div>
+            </div>
+         </div>
+      </div>
+
+  <!-- modal-loading -->
+  <div class="modal-loading"></div>
+  <!-- MODAL TO CROP THE IMAGE -->
+  <div class="modal fade" id="modalCrop">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img src="" id="crop-image" style="max-width: 100%;">
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group pull-left" role="group">
+            <button type="button" class="btn btn-default js-zoom-in">
+              <span class="fa fa-search-plus"></span>
+            </button>
+            <button type="button" class="btn btn-default js-zoom-out">
+              <span class="fa fa-search-minus"></span>
+            </button>
+          </div>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary js-crop-and-upload">Crop e Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      <!-- JavaScript Libraries -->
+      <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+      <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'js/crop.min.js' %}"></script>
+      <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js">  </script>
+      <script>
+         const signUpButton = document.getElementById('signUp');
+         const signInButton = document.getElementById('signIn');
+         const container = document.getElementById('container');
+
+         signUpButton.addEventListener('click', () => {
+           container.classList.add("right-panel-active");
+         });
+
+         signInButton.addEventListener('click', () => {
+         container.classList.remove("right-panel-active");
+            });
+
+         function inputChange(id){
+         input=document.getElementById(id).click();;
+         }
+
+         $("#signUp").click(function(event){
+           $("#inputCEP").focus()
+         })
+
+         $("#change-image-button").click(function(event){
+            $("#id_avatar").click()
+         })
+
+          /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+          $(".avatar-img").on("change", "#id_avatar", function(event){
+            if (this.files && this.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                $("#crop-image").attr("src", e.target.result);
+                $("#modalCrop").modal("show");
+              }
+              reader.readAsDataURL(this.files[0]);
+            }
+          });
+
+          /* SCRIPTS TO HANDLE THE CROPPER BOX */
+          var $image = $("#crop-image");
+          var cropBoxData;
+          var canvasData;
+          $("#modalCrop").on("shown.bs.modal", function () {
+              $image.cropper({
+                viewMode: 1,
+                aspectRatio: 1/1,
+                minCropBoxWidth: 200,
+                minCropBoxHeight: 200,
+                ready: function () {
+                  $image.cropper("setCanvasData", canvasData);
+                  $image.cropper("setCropBoxData", cropBoxData);
+                }
+              });
+
+              $(".cropper-container.cropper-bg").css("width", "100%")
+            
+          })
+          $("#modalCrop").on("hidden.bs.modal", function () {
+            cropBoxData = $image.cropper("getCropBoxData");
+            canvasData = $image.cropper("getCanvasData");
+            $image.cropper("destroy");
+          });
+
+          $(".js-zoom-in").click(function () {
+            $image.cropper("zoom", 0.1);
+          });
+
+          // Enable zoom out button
+          $(".js-zoom-out").click(function () {
+            $image.cropper("zoom", -0.1);
+          });
+          
+          /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+          $(".js-crop-and-upload").click(function () {
+            var cropData = $image.cropper("getData");
+            console.log("send")
+
+              var data = new FormData();
+              const avatar = document.querySelector("#id_avatar").files[0]
+              const form = $(".avatar-img")
+              data.append('avatar', avatar)
+              data.append('x', cropData["x"])
+              data.append('y', cropData["y"])
+              data.append('height', cropData["height"])
+              data.append('width', cropData["width"])
+  
+              $.ajax({
+                url: form.attr("action"),
+                enctype: 'multipart/form-data',
+                data: data, 
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                type: form.attr("method"),
+                beforeSend: function(data){
+                },
+                success: function(data){
+                   console.log(data)
+                  if (!data["error"]){
+                      $("#profile-src").attr("src", data["avatar"])
+                  }
+                  $(".message").html(data["message"])
+                  $("#modalCrop").modal("hide")
+                },
+                complete: function(data){
+                }
+              })
+          });
+
+
+         $('input[name="cpf"]').mask('000.000.000-00', {reverse: true});
+         $("#inputCEP").focusout(function(){
+            $.ajax({
+              url: `https://viacep.com.br/ws/${$(this).val()}/json/unicode/`,
+              dataType: 'json',
+              success: function(resposta){
+                $("#inputAddress").val(resposta.logradouro);
+                $("#inputNeighborhood").val(resposta.bairro);
+                $("#inputCity").val(resposta.localidade);
+                $("#inputState").val(resposta.uf);
+                $("#inputNumber").focus();
+              }
+            });
+         });
+      </script>
+   </body>
+</html>

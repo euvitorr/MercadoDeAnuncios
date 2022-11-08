@@ -1,0 +1,90 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load embed_video_tags %}
+{% block content %}
+<!--==========================
+   Header
+   ============================-->
+{% include 'base/header.html' %}
+<div class="container" style="margin-top: 150px; margin-bottom: 80px;">
+<section id="duvidas">
+   <div class=" section-header text-center">
+      <h2 class="section-title">
+         Está com dúvidas?
+      </h2>
+      <div class="col-12" style="padding: 20px;">
+            <form>
+               <div class="col-md-3" style="margin-bottom: 10px;">
+                  <div class="row">
+                     <select name="category" class="form-control">
+                        <option value="0"> TODOS </option>
+                           {% for category in categories %}
+                           <option 
+                           {% if request.GET.category == category.pk|slugify %} selected {% endif %}
+                           value="{{ category.pk }}"> 
+                           {{ category|upper}} 
+                        </option>
+                        {% endfor %}
+                     </select>
+                  </div>
+               </div>
+               <div class="input-group mb-3">
+                  <input type="text" class="form-control" 
+                        value="{{ request.GET.search }}"
+                        name="search"
+                        placeholder="Buscar por duvida" 
+                        aria-label="Buscar por duvida" 
+                        aria-describedby="basic-addon2">
+
+                  <div class="input-group-append">
+                    <button class="btn btn-info" type="submit" style="width: 100px;"> 
+                       <i class="fa fa-search"></i>
+                     </button>
+                  </div>
+
+                </div>
+            </form>
+      </div>
+
+      <div id="accordion">
+         <div class="row about-container">
+            {% for question in object_list %}
+            <div class="col-12"  style="margin-bottom: 20px;">
+               <div class="about-container-boxduv">
+                  <div class="about-container-boxduv-item">
+                     <a 
+                        class="" 
+                        data-toggle="collapse" 
+                        data-target="#collapse-{{ question.pk }}" 
+                        aria-expanded="true" 
+                        aria-controls="collapse-{{ question.pk }}">
+                        <div class="_boxduv" >
+                           <img src="{% static 'img/assets/icon_plus.svg' %}"  align="left"  />
+                        </div>
+                     </a>
+                  </div>
+                  <div class="about-container-boxduv-item">
+                     <p>{{ question }}</p>
+                     <div id="collapse-{{ question.pk }}" class="collapse" aria-labelledby="headingOne"  data-parent="#accordion">
+                        <div class="card-body">
+                           <p>
+                              <strong>
+                              Resposta:  
+                              </strong> 
+                              {{ question.answer }}
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            {% endfor %}
+            <div style="margin: auto; margin-top: 50px;">
+               {% include 'base/pagination.html' %}
+            </div>
+      </div>
+</section>
+</div>
+{% include 'base/footer.html' %}
+{% endblock %}

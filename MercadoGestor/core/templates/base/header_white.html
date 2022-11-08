@@ -1,0 +1,76 @@
+{% load static %}
+<header id="header">
+   <div  class="container header-one">
+      <div class="">
+         <div id="" class="pull-left pl-4 pl-md-3">
+            <a class="pages decoration bold-text" href="{% url 'home' %}#main">
+               <h2 class='bold-text'><b>
+               {% if request.user.is_authenticated == False %}
+                  ManagerML 
+               {% else %} 
+                  {{ request.user.company }}
+               {% endif %}</b></h2>
+            </a>
+            <!-- Uncomment below if you prefer to use a text logo -->
+            <!--<h1><a href="#hero">ManagerML</a></h1>-->
+         </div>
+         <nav id="nav-menu-container" >
+            <ul class="nav-menu menu-center" >
+               <li class="menu-active mr-5"><a class="pages decoration" id="parameter" href="{% url 'home' %}#main">Conheça a ML</a></li>
+               <li class="mr-5"><a class="pages decoration" href="{% url 'home' %}#team">Ser Manager</a></li>
+               <li class="mr-5"><a class="pages decoration" href="{% url 'home' %}#duvidas">Dúvidas</a></li>
+            </ul>
+            <ul class="nav-menu pull-right">
+               {% if request.user.is_authenticated == False %}
+               
+               <li class="p-2 p-md-0">
+                  <div class="btnEntrar">
+                     <a href="{%  url 'users:login' %}" class="decoration font-weight-bold">
+                        Entrar
+                     </a>
+                  </div>
+               
+                  {% else %}
+                  <div class="">
+                     <li class="menu-has-children dropdown">
+                        <div class="btnEntrar">
+                           <a href="#" class="decoration font-weight-bold w-100 h-100">Perfil</a>
+                        </div>
+                        <ul  style="border-radius: 10px;border-top-left-radius: 0px;">
+                           
+                           <a class="" href="{% url 'admin:index' %}"> 
+                              <li class="p-2 border-bottom text-center">
+                                 Administração 
+                              </li>
+                           </a>
+                           <a class="" href="{% url 'products:products' %}"> 
+                              <li class="p-2 border-bottom text-center">
+                                 Meus Produtos
+                              </li class="p-2">
+                           </a>
+                           
+                           <a class="" href="{% url 'products:history' %}">
+                              <li class="p-2 border-bottom text-center">
+                                 Histórico ML
+                              </li>
+                           </a>
+                          
+                           <a class="" href="{%  url 'users:logout' %}">
+                              <li class="p-2 text-center">
+                                 Sair
+                              </li>
+                           </a>
+                           
+                        </ul>
+                     </li>
+                  </div>
+                  {% endif %}
+               </li>
+            </ul>
+         </nav><br><br>
+         <!-- #nav-menu-container -->
+      </div>
+      <!-- col -->
+   </div>
+</header>
+<!-- #header -->

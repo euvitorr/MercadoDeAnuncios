@@ -1,0 +1,157 @@
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ManagerML</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Bootstrap CSS File -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/favicon.png' %}" rel="apple-touch-icon">
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css/style_login.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+  <header id="header">
+      <div id="logo" class="pull-left">
+        <br><br> <br><br><br>
+      </div>
+  </header><!-- #header -->
+ <br>
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="{% url 'users:signup' %}" method="POST">
+            {% if form_signup.non_field_errors %}
+                <span class="has-error">Verifique os erros abaixo e tente novamente</span>
+            {% endif %}
+            {% csrf_token %}
+
+			<h1>Crie sua conta</h1>
+
+            <input type="text" placeholder="Nome" name="first_name"  value="{{ form_signup.first_name.data|default_if_none:"" }}"
+            class="{% if form_signup.first_name.errors %}has-error{% endif %}" />
+            {% if form_signup.first_name.errors %}
+            {% for error in form_signup.first_name.errors %}
+            <span class="has-error">{{ error }}</span>
+            {% endfor %}
+        {% endif %}
+
+            <input type="email" placeholder="Email" name="email"  value="{{ form_signup.email.data}}"
+            class="{% if form_signup.email.errors %}has-error{% endif %}" />
+            {% if form_signup.email.errors %}
+				{% for error in form_signup.email.errors %}
+				<span class="has-error">{{ error }}</span>
+				{% endfor %}
+			{% endif %}
+
+            <input type="password" placeholder="Senha" name="password1"  
+            class="{% if form_signup.password1.errors %}has-error{% endif %}"/>
+            {% if form_signup.password1.errors %}
+				{% for error in form_signup.password1.errors %}
+				<span class="has-error">{{ error }}</span>
+				{% endfor %}
+			{% endif %}
+
+            <input type="password" placeholder="Confirmar Senha" name="password2"
+            class="{% if form_signup.password2.errors %}has-error{% endif %}"/>
+            {% if form_signup.password2.errors %}
+				{% for error in form_signup.password2.errors %}
+				<span class="has-error">{{ error }}</span>
+				{% endfor %}
+			{% endif %}
+			<button type="submit">Criar</button>
+		</form>
+	</div>
+
+	<div class="form-container sign-in-container">
+		<form action="{% url 'users:login' %}" method="post">
+            {% for error in form.non_field_errors %}
+                <span class="has-error">{{ error|escape|safe }}</span>
+            {% endfor %}
+            {% csrf_token %}
+			<h1>Login</h1>
+            <input type="email" name="username" placeholder="Email"   value="{{ form.username.data|default_if_none:"" }}"
+                class="{% if form.username.errors %}has-error{% endif %}"/>
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <span class="has-error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+            <input type="password" name="password" placeholder="Senha"  
+                class="{% if form.password.errors %}has-error{% endif %}"/>
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    <span class="has-error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+            <a href="{% url 'users:password_reset' %}">Esqueceu sua senha?</a>
+			<button type="submit">Entrar</button>
+		</form>
+	</div>
+
+    <div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Bem vindo!</h1>
+				<p>Para conectar, informe seu login com suas informações pessoais</p>
+				<button class="ghost" id="signIn">Conectar</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Seja bem vindo!</h1>
+				<p>Entre com as suas informações <br>e junte-se a nós!</p>
+				
+				
+				<button class="ghost" id="signUp">Cadastrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+  <!-- JavaScript Libraries -->
+  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+  <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+  <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+  <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+  <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+  <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
+  <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
+    <script>
+	const signUpButton = document.getElementById('signUp');
+	const signInButton = document.getElementById('signIn');
+	const container = document.getElementById('container');
+
+	signUpButton.addEventListener('click', () => {
+		container.classList.add("right-panel-active");
+	});
+
+	signInButton.addEventListener('click', () => {
+		container.classList.remove("right-panel-active");
+    });
+    
+
+    const facebook_login = document.querySelector("#facebook_login")
+    facebook_login.addEventListener('click', () => {
+        alert("Not Implemented")
+    })
+
+    const gogole_login = document.querySelector("#google_login")
+    gogole_login.addEventListener('click', () => {
+        alert("Not Implemented")
+    })
+
+    {% if form_signup.email.errors %}
+    const sigup = document.querySelector("#signUp")
+    sigup.click()
+    {% endif %}
+
+  </script>
+
+</body>
+</html>
